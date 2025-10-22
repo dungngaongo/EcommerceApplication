@@ -2,9 +2,10 @@ spring:
   application:
     name: product-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/product?stringtype=unspecified&options=-c%20TimeZone=Asia/Ho_Chi_Minh
-    username: dungngaongo
-    password: cungvay10
+#    url: jdbc:postgresql://localhost:5432/product?stringtype=unspecified&options=-c%20TimeZone=Asia/Ho_Chi_Minh
+    url: jdbc:postgresql://ep-empty-frog-adnk2qcx-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+    username: neondb_owner
+    password: npg_HYj8xusqAc2p
   jpa:
     properties:
       hibernate:
