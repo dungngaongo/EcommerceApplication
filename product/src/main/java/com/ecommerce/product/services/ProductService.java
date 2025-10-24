@@ -46,7 +46,12 @@ public class ProductService {
     }
 
     public Optional<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
-        return null;
+        return productRepository.findById(id)
+                .map(existingProduct -> {
+                    updateProductFromRequest(existingProduct, productRequest);
+                    Product savedProduct = productRepository.save(existingProduct);
+                    return mapToProductResponse(savedProduct);
+                });
     }
 
     public List<ProductResponse> getAllProducts() {
