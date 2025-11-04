@@ -1,8 +1,13 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/order?stringtype=unspecified&options=-c%20TimeZone=Asia/Ho_Chi_Minh
-    username: dungngaongo
-    password: cungvay10
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   jpa:
     properties:
       hibernate:
@@ -13,16 +18,13 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-#  h2:
-#    console:
-#      enabled: true
-#  datasource:
-#    url: jdbc:h2:mem:test
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: create
 
 server:
   port: 8083
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 

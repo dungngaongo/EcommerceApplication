@@ -1,32 +1,19 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/userdb
-#      uri: mongodb+srv://tandung85lvt_db_user:u5jGM2QgFcsMwYgN@user-data.rjjsekl.mongodb.net/?retryWrites=true&w=majority&appName=user-data
+      uri: ${MONGO_URI}
       database: userdb
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/userdb?stringtype=unspecified&options=-c%20TimeZone=Asia/Ho_Chi_Minh
-#    username: dungngaongo
-#    password: cungvay10
-#  jpa:
-#    properties:
-#      hibernate:
-#        jdbc:
-#          time_zone: Asia/Ho_Chi_Minh
-#    database: POSTGRESQL
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#  h2:
-#    console:
-#      enabled: true
-#  datasource:
-#    url: jdbc:h2:mem:test
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: create
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 server:
-   port: 8082
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
