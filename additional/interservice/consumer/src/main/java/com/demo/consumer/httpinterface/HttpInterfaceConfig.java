@@ -1,7 +1,9 @@
 package com.demo.consumer.httpinterface;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,8 +24,15 @@ public class HttpInterfaceConfig {
 //    }
 
     @Bean
-    public ProviderHttpInterface restClientHttpInterface() {
-        RestClient restClient = RestClient.builder().baseUrl("http://localhost:8081").build();
+    @Primary
+    @LoadBalanced
+    public RestClient.Builder restClientBuilder() {
+        return RestClient.builder();
+    }
+
+    @Bean
+    public ProviderHttpInterface restClientHttpInterface(RestClient.Builder restClientBuilder) {
+        RestClient restClient = restClientBuilder.baseUrl("http://provider").build();
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
 
