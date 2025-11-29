@@ -22,6 +22,14 @@ spring:
 server:
   port: 8083
 
+rabbitmq:
+  exchange:
+    name: order.exchange
+  queue:
+    name: order.queue
+  routing:
+    key: order.tracking
+
 management:
   endpoints:
     web:
@@ -45,6 +53,9 @@ eureka:
     fetch-registry: true
 
 logging:
+  level:
+    org.springframework.amqp: DEBUG
+    org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
   file:
     name: logs/${spring.application.name}.log
   logback:

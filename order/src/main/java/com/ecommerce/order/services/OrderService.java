@@ -9,10 +9,12 @@ import com.ecommerce.order.models.CartItem;
 import com.ecommerce.order.models.Order;
 import com.ecommerce.order.models.OrderItem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class OrderService {
     private final CartService cartService;
     private final OrderRepository orderRepository;
+    private final RabbitTemplate rabbitTemplate;
 
     public Optional<OrderResponse> createOrder(String userId) {
         List<CartItem> cartItems = cartService.getCart(userId);
@@ -56,6 +59,10 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         cartService.clearCart(userId);
+
+        rabbitTemplate.convertAndSend("order.exchange",
+                "order.tracking",
+                Map.of("orderId", savedOrder.getId(), "status", "CREATED"));
         
         return Optional.of(mapToOrderResponse(savedOrder));
     }
