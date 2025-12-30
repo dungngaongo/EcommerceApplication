@@ -1,29 +1,29 @@
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: product-service
-          uri: lb://PRODUCT-SERVICE
-          predicates:
-            - Path=/api/products/**
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/users/**
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/api/orders/**, /api/cart/**
-        - id: eureka-server
-          uri: http://localhost:8761
-          predicates:
-            - Path=/eureka/main
-          filters:
-            - SetPath=/
-        - id: eureka-server-static
-          uri: http://localhost:8761
-          predicates:
-            - Path=/eureka/**
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: product-service
+#          uri: lb://PRODUCT-SERVICE
+#          predicates:
+#            - Path=/api/products/**
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/api/users/**
+#        - id: order-service
+#          uri: lb://ORDER-SERVICE
+#          predicates:
+#            - Path=/api/orders/**, /api/cart/**
+#        - id: eureka-server
+#          uri: http://localhost:8761
+#          predicates:
+#            - Path=/eureka/main
+#          filters:
+#            - SetPath=/
+#        - id: eureka-server-static
+#          uri: http://localhost:8761
+#          predicates:
+#            - Path=/eureka/**
 
 server:
   port: 8080
@@ -56,3 +56,11 @@ resilience4j:
         failureRateThreshold: 50
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: count_based
+
+# SECURITY
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/ecom-app
