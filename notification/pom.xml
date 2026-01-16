@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>25</java.version>
+		<java.version>21</java.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -94,8 +94,24 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+                    <image>
+                        <name>ecom/notification-service</name>
+                    </image>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.6</version>
+                <configuration>
+                    <from>
+                        <image>gcr.io/distroless/java21</image>
+                    </from>
+                    <to>
+                        <image>dungngaongo/notification-service</image>
+                    </to>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
